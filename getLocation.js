@@ -17,7 +17,8 @@ function error() {
   console.log('Geolocation error!');
 }
 
-// document.getElementById('get-location').addEventListener('click', getLocation);
-
 // Continuously Watch the User's Location
 navigator.geolocation.watchPosition(success);
+
+// <button id="get-location">Get Location</button>
+document.getElementById('get-location').addEventListener('click', getLocation);
