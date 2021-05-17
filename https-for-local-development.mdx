@@ -1,0 +1,47 @@
+# Using HTTPS for Local Development for React, Angular, and Node
+*https://blog.bitsrc.io/using-https-for-local-development-for-react-angular-and-node-fdfaf69693cd*
+
+## React Setting
+
+Windows:
+
+```javascript
+"scripts": {
+  "start":
+    "set HTTPS=true&&set SSL_CRT_FILE={CERT-PATH}&&set SSL_KEY_FILE={KEY-PATH}&&react-scripts start"
+}
+```
+
+Linux, macOS:
+
+```javascript
+"scripts": {
+  "start":
+    "HTTPS=true SSL_CRT_FILE={CERT-PATH} SSL_KEY_FILE={KEY-PATH} react-scripts start"
+}
+```
+
+NodeJS:
+
+```javascript
+const https = require('https');
+const fs = require('fs');
+const express = require('express');
+
+const app = express();
+
+const options = {
+    key: fs.readFileSync('./localhost-key.pem'), // Replace with the path to your key
+    cert: fs.readFileSync('./localhost.pem') // Replace with the path to your certificate
+}
+
+app.use((req, res, next) => {
+    res.send('<h1>HTTPS Works!</h1>');
+});
+
+const port = 3000;
+
+https.createServer(options, app).listen(port,() => {
+    console.log('Server listening on port ' + port);
+});
+```
